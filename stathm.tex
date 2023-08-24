@@ -1,0 +1,1348 @@
+%&latex
+%%e-latex2e，ML LaTeX 2e，xelatex
+\ifdefined\XeTeXversion\else\ifdefined\pdftexversion\else
+\newcount\pdftexversion\pdftexversion=140
+\def\pdftexrevision{18}
+\fi\fi
+\documentclass{ctexart}
+%用bakoma时使用上面的，编译时须注释
+
+% \documentclass[a4paper,12pt]{report} %编译时取消注释
+\usepackage[margin=1in]{geometry} % to change the page dimensions
+% \usepackage{ctex}  %编译时取消注释
+% \usepackage{xeCJK}   %编译时取消注释
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%\usepackage{times}
+\usepackage{setspace}
+% \usepackage{lastpage}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+%\graphicspath{{fig/}}
+\usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{array}  
+% \usepackage{fontspec,xunicode,xltxtra}
+% \renewcommand{\sfdefault}{cmr}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage[titletoc]{appendix}
+%\usepackage[top=30mm,bottom=30mm,left=20mm,right=20mm]{geometry}
+%\usepackage{cite}
+\usepackage[backend = biber, style = gb7714-2015, defernumbers=true]{biblatex}
+\renewcommand*{\bibfont}{\small}
+\addbibresource{reference.bib}
+%\usepackage{courier}
+% \setmonofont{Courier New}
+\usepackage{listings}
+\lstset{tabsize=4, keepspaces=true,
+    xleftmargin=2em,xrightmargin=0em, aboveskip=1em,
+    %backgroundcolor=\color{gray!20},  % 定义背景颜色
+    frame=none,                       % 表示不要边框
+    extendedchars=false,              % 解决代码跨页时，章节标题，页眉等汉字不显示的问题
+    numberstyle=\ttfamily,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue}\bfseries,
+    breakindent=10pt,
+    identifierstyle=,                 % nothing happens
+    commentstyle=\color{green}\small,  % 注释的设置
+    morecomment=[l][\color{green}]{\#},
+    numbers=left,stepnumber=1,numberstyle=\scriptsize,
+    showstringspaces=false,
+    showspaces=false,
+    flexiblecolumns=true,
+    breaklines=true, breakautoindent=true,breakindent=4em,
+    escapeinside={/*@}{@*/},
+}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}[subsection]
+\newtheorem{definition}{Definition}[subsection]
+\newtheorem{corollary}{Corollary}[subsection]
+\newtheorem{example}{Example}[subsection]
+\newtheorem{lemma}{Lemma}[subsection]
+\newtheorem{proposition}{Proposition}[subsection]
+\usepackage{amsfonts}
+%\usepackage{bm}
+\usepackage{booktabs} % for much better looking tables
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfigure} % make it possible to include more than one captioned figure/table in a single float
+% These packages are all incorporated in the memoir class to one degree or another...
+\usepackage{cases} %equation set
+\usepackage{multirow} %use table
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{hyperref}
+\hypersetup{colorlinks,linkcolor=black,anchorcolor=black,citecolor=black, pdfstartview=FitH,bookmarksnumbered=true,bookmarksopen=true,} % set href in tex & pdf
+%\usepackage[framed,numbered,autolinebreaks,useliterate]{mcode} % 插入matlab代码
+% \XeTeXlinebreaklocale "zh"
+% \XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+
+\makeatletter
+\newenvironment{breakablealgorithm}
+  {% \begin{breakablealgorithm}
+   \begin{center}
+     \refstepcounter{algorithm}% New algorithm
+     \hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+     \renewcommand{\caption}[2][\relax]{% Make a new \caption
+       {\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+       \ifx\relax##1\relax % #1 is \relax
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+       \else % #1 is not \relax
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+       \fi
+       \kern2pt\hrule\kern2pt
+     }
+  }{% \end{breakablealgorithm}
+     \kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+   \end{center}
+  }
+\makeatother
+%%%%此处break 算法
+%---------------------------------------------------------------------
+%       页眉页脚设置
+%---------------------------------------------------------------------
+\fancypagestyle{plain}{
+    \pagestyle{fancy}      %改变章节首页页眉
+}
+
+\pagestyle{fancy}
+\lhead{\kaishu~2013554zyc~}
+%\rhead{\kaishu~xxx}
+\cfoot{\thepage}
+\titleformat{\chapter}{\centering\zihao{2}\heiti}{第\chinese{chapter}章}{1em}{}
+% \titleformat{\chapter*}{\centering\zihao{-1}\heiti}
+\begin{comment}
+%---------------------------------------------------------------------
+%       章节标题设置
+%---------------------------------------------------------------------
+\titleformat{\chapter}{\centering\zihao{-1}\heiti}{实验\chinese{chapter}}{1em}{}
+\titlespacing{\chapter}{0pt}{*0}{*6}
+\end{comment}
+%---------------------------------------------------------------------
+%       摘要标题设置
+%---------------------------------------------------------------------
+%\renewcommand{\abstractname}{摘要}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+
+%---------------------------------------------------------------------
+%       参考文献设置
+%---------------------------------------------------------------------
+%\renewcommand{\bibname}{\zihao{2}{\hspace{\fill}参\hspace{0.5em}考\hspace{0.5em}文\hspace{0.5em}献\hspace{\fill}}}
+\renewcommand{\bibname}{参考文献}
+\begin{comment}
+%---------------------------------------------------------------------
+%       引用文献设置为上标
+%---------------------------------------------------------------------
+\makeatletter
+\def\@cite#1#2{\textsuperscript{[{#1\if@tempswa , #2\fi}]}}
+\makeatother
+\end{comment}
+%---------------------------------------------------------------------
+%       目录页设置
+%---------------------------------------------------------------------
+%\renewcommand{\contentsname}{\zihao{-3} 目\quad 录}
+\renewcommand{\contentsname}{目录}
+\titlecontents{chapter}[0em]{\songti\zihao{-4}}{\thecontentslabel\ }{}
+{\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
+\titlecontents{section}[2em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
+{\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
+\titlecontents{subsection}[4em]{\vspace{0.1\baselineskip}\songti\zihao{-4}}{\thecontentslabel\ }{}
+{\hspace{.5em}\titlerule*[4pt]{$\cdot$}\contentspage}
+
+\begin{document}
+
+%---------------------------------------------------------------------
+%       封面设置
+%---------------------------------------------------------------------
+
+
+%---------------------------------------------------------------------
+%  摘要页
+%---------------------------------------------------------------------
+
+
+%---------------------------------------------------------------------
+%  目录页
+%---------------------------------------------------------------------
+
+%---------------------------------------------------------------------
+%  绪论
+%---------------------------------------------------------------------
+\section{Basic convergence concepts and preliminary theorems}
+P5
+\subsection{Modes of convergence of a sequence of random variables}
+
+\begin{definition}[convergence in probability]
+  
+\end{definition}
+
+\begin{example}
+  Bernoulli trials, derive expectations and variance, using chebyshev to derive \(\xrightarrow{p}\) 
+\end{example}
+
+\(\boldsymbol{X}_n \xrightarrow{p}\boldsymbol{X}\ if \|\boldsymbol{X}_n-\boldsymbol{X}\|\xrightarrow{p}0\) 
+
+\(\boldsymbol{X}_n \xrightarrow{p}\boldsymbol{X} \iff component-wise\ convergence\)
+
+\(X_n=E(X_n)+O_p(\sqrt{\operatorname{Var}(X_n)})\) 
+\begin{definition}[bounded in probability]
+  for any \(\epsilon\), there exists a k, s.t.\sqrt{\[
+  P(|X_{n}|>k)\le \epsilon
+  \] } 
+\end{definition}
+
+\(X_n=O_p(1)\) 
+\begin{definition}[convergence with probability one]
+   
+\end{definition}
+characterization: \(\lim_{n\to \infty} P(|X_m-X|<\epsilon,\forall m\ge n)=1,every\ \epsilon\) 
+\begin{example}
+  iid U(0,1), \(X_{(n)}=\max{X_1,\ldots,X_n}\), see \(X_{(n)}\xrightarrow{wp1}1.\)  
+\end{example}
+\begin{definition}[convergence in rth mean]
+  \(\lim_{n\to \infty}E|X_n-X|^r=0\) 
+\end{definition}
+The bigger the r is, the stronger the convergence is. (By Jensen: \(EY^{\frac{r}{s}}\ge (EY)^{\frac{r}{s}}\), where \(Y=|X_n-X|^s\)  )
+\begin{definition}[convergence in distribution(in law)]
+  \(\lim_{n\to \infty}F_{X_n}(t)=F_X(t)\), at every continuity point of \(F_X\)  
+\end{definition}
+\begin{example}
+  \(X_n\sim Uniform(\frac{1}{n},\ldots,\frac{n-1}{n},1)\), then for any \(t\in [\frac{i}{n},\frac{i+1}{n}), F_{X_n}=\frac{i}{n},F_X(t)=t\), so we have \(\xrightarrow{d}\)   
+\end{example}
+\begin{example}
+  \(X_n\sim N(0,1+n ^{-1}),\lim_n F_{X_n}(x)=\phi(x)\) 
+\end{example}
+joint convergence in law versus(stronger than)marginal convergence
+\begin{example}
+  \(X\sim U(0,1)\), so \(1-X \sim U(0,1)\), let $Y_n=X$ for n odd and \(Y_n=1-X\) for n even.   
+\end{example}
+
+Suppose \(X_n,X\) are integer-valued r.v., we have: \(X_n \xrightarrow{d}X \iff P(X_n=k)\to P(X=k)\)  
+
+\subsection{Fundamental results and theorems on convergence}
+\subsubsection{Relationship}
+\begin{theorem}
+  the four relationship between the four convergence and the proof respectively. 
+\end{theorem}
+\begin{example}
+  \(X_i's \overset{\text{i.i.d}}{\sim}N(0,1)\), by the above and Markov ineq. we have: \(X_n \xrightarrow{wp1}0\)  
+\end{example}
+\subsubsection{Transformations}
+P10
+\begin{theorem}[Continuous Mapping Theorem]
+  Note that we need the joint convergence especially when convergence in law!
+\end{theorem}
+\begin{example}
+  (i)
+  (ii)If \((X_n,Y_n)\xrightarrow{d}N_2(\boldsymbol{0},\boldsymbol{I}_2)\), then \(\max\{X_n,Y_n\} \xrightarrow{d}\max\{X,Y\}\), which has the CDF \([\phi(x)]^2\)   
+\end{example}
+\begin{corollary}
+  linear and quadratic forms of CMT. If we have joint convergence, then \(\boldsymbol{A}\boldsymbol{X}_n\to \boldsymbol{A}\boldsymbol{X}\), so as the quadratic form. Proof can be conduct using the fact that they are all functions of \(\boldsymbol{X}_n\)  
+\end{corollary}
+\begin{example}
+  (i)(ii)When we have marginal convergence of wp1 or probability, we have the corresponding convergence of their sum and products. The anagolous statement is wrong in terms of \(\xrightarrow{d}\), for the joint convergence is needed.
+\end{example}
+\begin{example}
+  (i)For non-degenerate distribution, the function can be non-continous at countable points. \(\boldsymbol{X}_n \xrightarrow{d}\boldsymbol{X}\sim N(0,1),then\  \frac{1}{X_n}\xrightarrow{d}Z=\frac{1}{X}\) 
+  
+  (ii)if \((X_n,Y_n)\xrightarrow{d}N_2(\boldsymbol{0},\boldsymbol{I}_2)\), then \(\frac{X_n}{Y_n}\xrightarrow{d}standard\ Cauchy\). The ratio of two independent standard normal rv. and request the joint convergence. 
+\end{example}
+\begin{example}
+  \(\overline{X}_n \xrightarrow{p}\theta \Rightarrow \overline{X}_n^{1/2} \xrightarrow{p}\theta^{1/2}\) 
+\end{example}
+
+\begin{theorem}[Slutsky's Theorem]
+  Marginal convergence is needed for convergence in law in the case of: \(X_n \xrightarrow{d}X, Y_n \xrightarrow{p}c\), then we have the corresponding convergence of their sum and products and ratio. Think of the proof. 
+\end{theorem}
+\(Y_n=X_n+o_p(1)\), then we can investigate \(Y_n\) by investigating \(X_n\). It suffixes to show that \(Y_n-X_n=o_p(1)\) 
+
+\begin{example}
+\(X_n \xrightarrow{p}c \iff X_n \xrightarrow{d}c\), can be proved by definition of \(\xrightarrow{p}\) and the degenerate distribution of c.  
+\end{example}
+
+\begin{example}
+  Gamma distribution, omited
+\end{example}
+\begin{example}
+  the asymptotic distribution of t-statistic can be derived by CLT, WLLN and Slutsky. 
+\end{example}
+\subsubsection{WLLN and SLLN}
+\begin{theorem}
+  \(X_i's \overset{\text{iid}}{\sim}F\)
+  
+  (i)WLLN: \(\lim_{x \to \infty}x[1-F(x)+F(-x)]=0\) 
+  
+  (ii)SLLN: \(E[X_1]\) is finite.  
+\end{theorem}
+\begin{example}
+  \(X_i's \sim t(2)\), can use WLLN above.  
+\end{example}
+\begin{theorem}
+  \(X_1,X_2,\ldots\) with finite expectations. 
+  
+  (i)WLLN: uncorrelated and \(\lim_{n\to \infty}\frac{1}{n^2}\sum_{i=1}^{n}\sigma_i^2=0\) 
+  
+  (ii)SLLN: independent and \(\sum_{i=1}^{\infty} \frac{\sigma_i^2}{c_i^2}<\infty\),(special: \(c_=i\)), where \(c_n\) ultimately monotone and \(c_n\to \infty\), then: 
+  \[
+  c_n ^{-1} \sum_{i=1}^{n} (X_i-\mu_i)\xrightarrow{wp1}0.
+  \]    
+
+  (iii)SLLN with common mean: \(\sum_{i=1}^{\infty} \sigma_i ^{-2}=\infty\) 
+\end{theorem}
+\begin{example}
+  Consider the BLUE of the \(X_i \overset{\text{indep}}{\sim}(\mu,\sigma_i^2)\), fitted (iii) above.  
+\end{example}
+\begin{example}
+  When \((X_i's,Y_i's)\) are iid bivariate samples, then we have: \(X_iY_i's\) are iid and are fit for SLLN. We can derive the asymptotic distribution of \(r_n\) by this, SLLN and CMT.   
+\end{example}
+\subsubsection{Characterization of convergence in law}
+\begin{theorem}
+  (i)(The Portmanteau)\(\boldsymbol{X}_n \xrightarrow{d}\boldsymbol{X}\iff E[g(\boldsymbol{X}_n)]\to E[g(\boldsymbol{X})]\) 
+
+  (ii)(Levy-Cramer continuity)Let \(\phi\) denote the CHF, then \(\boldsymbol{X}_n \xrightarrow{d}\boldsymbol{X}\iff \lim_{n\to \infty}\phi_{X_n}(t)=\phi_X(t),\forall \boldsymbol{t}\) 
+
+  (iii)(Cramer-Wold device)\(\boldsymbol{X}_n \xrightarrow{d}\boldsymbol{X}\iff \boldsymbol{c}'\boldsymbol{X}_n \xrightarrow{d}\boldsymbol{c}'\boldsymbol{X},\forall \boldsymbol{c}\) 
+\end{theorem}
+(iii) can be proved by (ii). (iii) is often used when calculating the joint distribution 
+
+We can get: \(\boldsymbol{X}_N \xrightarrow{d}\boldsymbol{X},\boldsymbol{Y}_n \xrightarrow{d}\boldsymbol{c}\Rightarrow (\boldsymbol{X}_n,\boldsymbol{Y}_n)\xrightarrow{d}(\boldsymbol{X},\boldsymbol{c})\) using Slutsky and (iii) above.  
+
+\begin{example}
+  Example 1.1.3 revisted. Let \(g(x)=x^{10}\) and use (i) above. 
+\end{example}
+\begin{example}
+  Bernstein polynomials, using WLLN and (i) above. 
+
+  Note the the r.v. of Bin(n,p) can be seen as sum of iid, so we can use LLN or CLT!
+\end{example}
+\begin{example}
+  (Proof of LLN and CLT)
+
+  \(X_i's\) iid and \(T_n=\sum_{i=1}^{n} X_n\). So we have: \([\frac{\partial \phi_X(t)}{\partial t}]\Big|_{t=0}=\sqrt{-1}EX,[\frac{\partial^2 \phi_X(t)}{\partial t^2}]\Big|_{t=0}=-EX^2\),
+
+  (i)We use first-order Taylor, then: 
+  \[
+  \phi_{\frac{T_n}{n}}(t)=[\phi_{X_1}(\frac{t}{n})]^n=[1+\frac{\sqrt{-1}\mu t}{n}+o(|t|n ^{-1})] ^n\to exp\{\sqrt{-1}\mu t\}=\phi_\mu(t)
+  \] 
+  
+  (ii)We use first-order Taylor and suppose $\mu=0$ then: 
+  \[
+  \phi_{\frac{T_n}{\sqrt{n}}}(t)=[\phi_{X_1}(\frac{t}{\sqrt{n}})]^n=[1-\frac{\sigma^2 t^2}{2n}+o(t^2n ^{-1})] ^n\to exp\{-\sigma^2 t^2/2\}=\phi_{N(0,\sigma^2)}(t)
+  \] 
+
+  (iii)
+
+\end{example}
+  \begin{theorem}
+    (i)(Prohorov's)\(X_n \xrightarrow{d}X\Rightarrow X_n=O_p(1)\)
+    
+    (ii)(Polya's)\("F_{X_n}\Rightarrow F_X+continuity \ of\ F_X"\Rightarrow \sup_{x}|F_{X_n}-F_X|\to 0\) 
+  \end{theorem}
+  Proof of (ii) used cutting of the interval, which can turn a uncountable set into a countable object set. We divide the value range of \(F_x\) i.e. [0,1] into k pieces, with the monotonicity of F and the convergence of \(F_{X_n}\) at every point in the domain, then let \(k\to \infty\) 
+\begin{theorem}(Scheffe)
+  \(\lim_n f_n(\boldsymbol{x})=f(\boldsymbol{x}),\forall \boldsymbol{x},\)+ f and \(f_n\) is density, \(\Rightarrow \lim_n \int |f_n(\boldsymbol{x})-f(\boldsymbol{x})|d \boldsymbol{x}=0\)  
+\end{theorem}
+The sketch of the proof: the integration equals and we let \(g_n(\boldsymbol{x})=[f-f_n]I_{f\ge f_n}\) and use dominated convergence theorem.     
+\begin{theorem}[Frechet and Shohat]
+  Note the Carleman condition at P19
+\end{theorem}
+\subsubsection{Results on \(o_p\) and \(O_p\)}
+\(R_no_p(1)=o_p(R_n),R_nO_p(1)=O_p(R_n)\).
+
+\begin{lemma}
+  The key of the proof is \(f(\boldsymbol{t})=\frac{g(\boldsymbol{t})}{\|\boldsymbol{t\|^r}}\) 
+\end{lemma}
+\subsection{The central limit theorem}
+P20
+\begin{definition}
+  $\frac{X_n-\mu_n}{\sigma_n}\xrightarrow{d}N(0,1)$, written by \(X_n\ is\ AN(\mu_n,\sigma_n)\) 
+\end{definition}
+\subsubsection{The CLT for the iid case}
+\begin{theorem}[Lindeberg-Levy]
+  iid, finite variance.
+\end{theorem}
+
+\begin{example}[Confidence intervals]
+  namely Wald intervals, when \(\sigma\) is known 
+\end{example}
+\begin{example}[Sample variance]
+  iid and finite fourth moments. We can derive the AS distribution by using: \(Y_n=X_n+o_p(1)\). We want the AS distribution of $X_n$ to be known.
+  \[
+  \sqrt{n}(S_n^2-\sigma^2)=\sqrt{n}(\frac{1}{n-1}\sum_{i=1}^{n} (X_i-\mu)^2-\sigma^2)-\sqrt{n}\frac{n}{n-1}(\overline{X}_n-\mu)^2.
+  \] 
+  iid sum, so we can use CLT above.
+\end{example}
+\[
+  \sqrt{n}(S_n^2-\sigma^2)\xrightarrow{d}N(0,\mu_4-\sigma^4)
+\] 
+where \(\mu_4-\sigma^4=\operatorname{Var}[(X_1-\mu)^2]\) 
+\begin{example}[Level of the Chi-square test]
+  For we can take \(\chi_n^2\) as sum of iid, we can use CLT to derive the AS distribution of it. So simply we have: \(\frac{\chi_{n-1}^2-(n-1)}{\sqrt{2(n-1)}}\xrightarrow{d}N(0,1)\)  
+
+  Moreover, we have: \(\sqrt{n}(\frac{S_n^2}{\sigma^2}-1)\xrightarrow{d}N(0,\kappa+2)\), where \(\kappa=\frac{\mu_4}{\sigma^2}-3\) is the kurtosis. 
+  
+  Simply we derive, \(P_{H_0}(\frac{nS_n^2}{\sigma^2}>\chi_{n-1,\alpha}^2)\to 1-\phi(\frac{z_\alpha \sqrt{2}}{\sqrt{k+2}})\) 
+\end{example}
+\begin{theorem}[Multivariate CLT for iid case]
+  Proved by univariate CLT and Cramer-Wold device.
+\end{theorem}
+An exercise at the P22-.
+
+\begin{example}
+  We want to find the joint distribution of \((\overline{X}_n,Z_n)\). Then \(\boldsymbol{\Sigma}=\begin{pmatrix}
+    \operatorname{Var}(X_1) & \operatorname{Cov}(X_1,I\{X_1=0\})\\
+    * & \operatorname{Var}(I\{X_1=0\})
+  \end{pmatrix}\)  
+  Finally we have: 
+  \[
+  \sqrt{n}(\overline{X}_n,Z_n)-(E \overline{X}_n,EZ_n)\xrightarrow{d}\boldsymbol{N}_2(\boldsymbol{0},\boldsymbol{\Sigma})
+  \] 
+\end{example}
+
+\begin{definition}
+  Slowly varying at \(\infty\), if \(\lim_{n \to \infty}\frac{g(tx)}{g(x)}=1,\forall t>0\)  
+\end{definition}
+Examples: \(\log x,\frac{x}{1+x}\)
+
+\begin{theorem}[CLT when variance do not exist]
+  iid, \(v(x)=\int_{-x}^x y^2 dF(y)\) is slowly varying at \(\infty\)  
+\end{theorem}
+
+\begin{example}
+  \(X_1,\ldots \overset{\text{iid}}{\sim}t(2)\) 
+\end{example}
+
+\subsubsection{The CLT for the independent not necessarily iid case}
+\begin{theorem}[Lindeberg-Feller] 
+  independent and finite variance, and the L-F condition: 
+  \[
+  \frac{1}{s_n^2}\sum_{j=1}^{n} \int_{|x-\mu_j|>\epsilon s_n}(x-\mu_j)^2 dF_j(x)\to 0
+  \] 
+  i.e.
+  \[
+  \frac{1}{s_n^2}\sum_{j=1}^{n} E[(X_j-\mu_j)^2 I_{|X_j-\mu_j|>\epsilon s_n}]
+  \] 
+  where: \(s_n^2=\sum_{i=1}^{n} \sigma_i^2\) 
+\end{theorem}
+\begin{example}
+\(X_1,\ldots\) are independent, and \(X_j\sim U(-j,j)\) 
+\end{example}
+\begin{theorem}[Liapounov]
+  independent, finite variance, Liapounov condition: 
+  \[
+  \frac{1}{s_n^{2+\delta}}\sum_{j=1}^{n} E|X_j-\mu_j|^{2+\delta} 
+  \]  
+\end{theorem}
+Usually choose \(\delta=1\) or 2. If \(X_{n}\) is uniformly bounded and \(s_{n}\to \infty\), then choose \(\delta=1\) and finish.  
+
+\begin{example}
+  independent, \(X_{i}\sim BIN(p_{i},1)\). The condition above hold with \(\delta=1\) if \(s_{n}\to \infty\)   
+\end{example}
+\begin{theorem}[Hajek-Sidak]
+  iid, finite variance, condition: 
+  \[
+  \max_{1\le i\le n}\frac{c_{ni}^{2}}{\sum_{j=1}^{n} c_{nj}^{2}}\to 0
+  \] 
+  Then, 
+  \[
+  \frac{\sum_{i=1}^{n} c_{ni}(X_{i}-\mu)}{\sigma\sqrt{\sum_{j=1}^{n} c_{nj}^{2}}}\xrightarrow{d}N(0,1)
+  \] 
+\end{theorem}
+  \begin{example}[Simplest linear regression]
+    Essential! Calculate \(\hat{\beta}_{1}-\beta_{1}\) and use the theorem above. 
+  \end{example}
+\begin{theorem}[Lindeberg-Feller multivariate]
+  See
+\end{theorem}
+\begin{example}[multivariate regression]
+  Note that \(\boldsymbol{a}_{ni}\sim n^{-\frac{1}{2}}\) 
+\end{example}
+P27
+\subsubsection{CLT for a random number of summands}
+\begin{theorem}[Anscombe-Renyi]
+  
+\end{theorem}
+\begin{example}
+  Coupon
+\end{example}
+\subsubsection{CLT for dependent sequences}
+\begin{example}
+  stationary Gaussian sequence, common mean and variance, long-run variance exists. 
+  \(\operatorname{Var}(\sqrt{n}(\overline{X}_{n}-\mu))=\sigma+\frac{1}{n}\sum_{i\neq j}^{} Cov(X_{i}X_{}j)=\sigma^2+\frac{2}{n}\sum_{i=1}^{n} (n-i)\gamma_{i}\)  
+\end{example}
+\begin{definition}[m-dependent]
+  for a given fixed m if \((X_{1},\ldots,X_{i})\) and \(X_{j},X_{j+1},\ldots\) are independent whenever \(j-i>m\)   
+\end{definition}
+\begin{theorem}[m-dependent sequence]
+  \(X_{i}'s\) is m-dependent with common mean and variance, then 
+  \[
+  \sqrt{n}(\overline{X}_n-\mu)\xrightarrow{d}N(0,\tau^{2})
+  \]  
+  where \(\tau^{2}=\sigma^{2}+2 \sum_{i=2}^{m+1} Cov(X_{i},X_{j})\) 
+\end{theorem}
+See Homework for a proof.
+
+\begin{example}
+  Suppose \(Z_{i}\) are iid with a finite variance \(\sigma^{2}\), let \(X_{i}=(Z_{i}+Z_{i+1})/2\), we can write: 
+  \(\sum_{i=1}^{n} X_{i}=\sum_{i=2}^{n} Z_{i}+\frac{Z_{1}+Z_{n+1}}{2}\), that's the \(Y_n=X_{n}+o_p(1)\)     
+\end{example}
+\begin{example}
+  None
+\end{example}
+\begin{theorem}
+  sample without replacement
+\end{theorem}
+\begin{example}
+  None
+\end{example}
+\subsubsection{Accuracy of CLT}
+\begin{theorem}[Berry-Esseen]
+  (i)The speed of convergence of CLT is \(n^{-\frac{1}{2}}\) 
+  (ii)
+\end{theorem}
+omited
+\subsubsection{Edgeworth expansions}
+p34
+
+\newpage
+\section{Transformations of given statistics: The delta method}
+P41
+\subsection{Basic result}
+\begin{theorem}[Delta Theorem]
+  The core of this is: If
+
+  \(\sqrt{n}(T_{n}-\theta)=O_{p}(1)\) and g be once differentiable at \(\theta\) with \(g'(\theta)\neq 0\)  
+  
+  then we have:   
+  \[
+  \sqrt{n}[g(T_{n})-g(\theta)]=\sqrt{n}(T_{n}-\theta)g'(\theta)+o_{p}(1)
+  \] 
+  
+  This can be proved by Taylor expansion w.r.t. \(g(T_{n})\) at \(\theta\).  
+\end{theorem}
+Special case is when \(\sqrt{n}(T_{n}-\theta)\xrightarrow{d}N(0,\sigma^{2}(\theta))\) 
+
+We can use Delta theorem with Slutsky, for \(T_{n}\xrightarrow{p}\theta\).  
+
+Even more generally, we can replace all the \(\sqrt{n}\) with any \(a_{n}\) which is a sequence of positive numbers with \(a_{n}\to \infty\)   
+
+There is an exercise at P43-
+
+\begin{example}
+  For the iid CLT case with \(g(x)=x_{2}\), we should discuss whether \(\mu=0\), for Delta Theorem requests \(g'(\mu)\neq 0\).
+  
+  When \(\mu=0\), we can get the AS distribution by CMT. (\(\sqrt{n}\overline{X}_n/\sigma \xrightarrow{d}N(0,1) \Rightarrow n \overline{X}_n^2 /\sigma^2 \sim \chi^2_1\))  
+\end{example}
+\begin{example}
+  Note that r.v. of Bin(n,p) can be seen as sum of iid., then we can use CLT.
+\end{example}
+\begin{example}
+  Suppose \(T_{n}\) is the normal case with \(g(x)=|x|\). We need to discuss whether \(\theta=0\) as well, for Delta Theorem requests g be once differentiable at \(\theta\).
+
+  When \(\theta=0\), we can determine the limit behaviour of \(|T_{n}|\) directly. 
+  \[
+  \begin{align}
+  P(\sqrt{n}|T_{n}|<a)&=P(-a<\sqrt{n}T_{n}<a)\\&\to \phi(\frac{a}{\sigma})-\phi(-\frac{a}{\sigma})
+  \end{align}
+  \] 
+\end{example}
+\subsection{Higher-order expansions}
+Using Taylor expansion, we can easily show that: 
+\begin{theorem}
+  \(\sqrt{n}(T_{n}-\theta)=O_{p}(1)\) and g is differentiable k at \(\theta\) with \(g^{(k)}(\theta)\neq 0\ but\ g^{(j)}(\theta)=0\ for\ j<k\)
+  Then: 
+
+  \[
+  g(T_{n})=g(\theta)+\frac{(T_{n}-\theta)^{k}}{k!}g^{(k)}(\theta)+o_p((T_n-\theta)^{k})
+  \] 
+  \[
+  (\sqrt{n})^{k}[g(T_{n})-g(\theta)]=\frac{1}{k!}[g^{(k)}(\theta)][\sqrt{n}(T_{n}-\theta)]^{k}+o_p(1)
+  \] 
+\end{theorem}
+\begin{example}
+  (i)Example 2.1.1 revisited, for \(\mu=0, n \overline{X}_{n}^{2}/\sigma^{2}\xrightarrow{d}\frac{1}{2}\cdot 2\cdot [N(0,1)]^{2}\)
+  
+  (ii)If \(\sqrt{n}\overline{X}_{n}\xrightarrow{d}N(0,1)\), then \(-2n(\cos \overline{X}_n -1)\xrightarrow{d}\chi_{1}^{2}\)  
+\end{example}
+\subsection{Multivariate version of delta theorem}
+\begin{theorem}
+  \(\sqrt{n}(\boldsymbol{T}_{n}-\boldsymbol{\theta})\xrightarrow{d}N_{k}(\boldsymbol{0},\boldsymbol{\Sigma(\boldsymbol{\theta})})\) and g be once differentiable at \(\boldsymbol{\theta}\) with \(\nabla g(\boldsymbol{\theta})\)
+  
+  Then: 
+
+  \[
+  \sqrt{n}(g(\boldsymbol{T}_{n})-g(\boldsymbol{\theta})) \xrightarrow{d}N_{m}(\boldsymbol{0},\nabla^{T}g(\boldsymbol{\theta})\boldsymbol{\Sigma}(\boldsymbol{\theta})\nabla g(\boldsymbol{\theta}))
+  \] 
+\end{theorem}
+It can be shown by Cramer-Wold device, which can derive multivariate distribution by turning it into univariate distribution. 
+
+Or just make the first-order Taylor expansion: 
+\[
+g(\boldsymbol{T}_n)=g(\boldsymbol{\theta})+\nabla^{T} g(\boldsymbol{\theta})(\boldsymbol{T}_{n}-\boldsymbol{\theta})+o_p(\|\boldsymbol{T}_{n}-\boldsymbol{\theta}\|).
+\] 
+with Corollary 1.2.1 and we can simply obtain the AS distribution. 
+
+\begin{example}[Sample variance revisited(Example 1.3.2)]
+  iid with finite fourth moments. Taking: 
+  \[
+  \boldsymbol{T}_{n}=(\overline{X}_{n},\overline{X^{2}_{n}}),\boldsymbol{\theta}=(EX_{1},EX_{1}^{2})^{T},\boldsymbol{\Sigma}=\begin{pmatrix}
+    \operatorname{Var}(X_{1})&\operatorname{Cov}(X_{1},X_{1}^{2})\\ * &\operatorname{Var}(X_{1}^{2})
+  \end{pmatrix}
+  \]                                           
+\end{example}
+Then we can use multivariate CLT. Taking \(g(u,v)=v-u^{2}\), we may as well assume \(\mu=0\)(or equivalently working with \(X_{i}-\mu\) ) for the sample variance does not depend on location. 
+
+Finally we can see that: \(\sqrt{n}(S_{n}^{2}-\sigma^{2})\xrightarrow{d}N(0,\mu_{4}-\sigma^{4})\). After another univariate Delta theorem, we can derive the AS distribution of \(S_{n}\)  
+
+\begin{example}[The joint limit distribution]
+  (i)By using multivariate Delta theorem like the example above, we can get: 
+  \[
+  \sqrt{n}\begin{pmatrix}
+    \overline{X}_{n}-\mu\\S_{n}^{2}-\sigma^{2}
+  \end{pmatrix}\xrightarrow{d}N_x\left( \begin{pmatrix}
+    0\\0
+  \end{pmatrix},\begin{pmatrix}
+    \sigma^{2}&\mu_{3}\\\mu_{3}&\mu_{4}-\sigma^{4}
+  \end{pmatrix} \right)
+  \] 
+  When \(\mu_{3}=0\)(normal distribution for example), we say they are AS independent. 
+  
+  (ii)After gaining the joint AS distribution of \((\overline{X}_n,S_{n}^{2})\), we can use Multivariate delta th w.r.t.  \((\overline{X}_n,S_{n}^{2})\) to obtain the AS 
+  distribution of \((S_{n}^{2},\frac{\overline{X}_{n}}{S_{n}})\) 
+\end{example}
+\subsection{Variance-stabilizing transformations(VST)}
+From the delta theorem, we have: If \(\sqrt{n}(T_{n}-\theta)\xrightarrow{d}N(0,\sigma^{2}(\theta))\), then: 
+\[
+\sqrt{n}(g(T_{n})-g(\theta))\xrightarrow{d }N(0,[g'(\theta)]^{2}\sigma^{2}(\theta))
+\] 
+If we want the variance in the asymptotic distribution of \(g(T_{n})\) to be constant, we set: 
+\[
+[g'(\theta)]^{2}\sigma^{2}(\theta)=k^{2}
+\]  
+for some constant k. Therefore, we choose the function g as: 
+\[
+g(\theta)=k\int \frac{1}{\sigma(\theta)}d \theta
+\] 
+\begin{example}
+  iid from Poisson, choose \(g(\theta)=\int \frac{k}{\sqrt{\theta}}d \theta=2k\sqrt{\theta}=\sqrt{\theta}\) 
+
+  Then we can calculate the Wald confidence interval for \(\theta\) 
+\end{example}
+\begin{example}[Sample correlation revisited]
+  By taking: \(\boldsymbol{T}_n=\left( \overline{X}_{n},\overline{Y}_{n},\frac{1}{n}\sum_{i=1}^{n} X_{i}^{2},\frac{1}{n}\sum_{i=1}^{n} Y_{i}^{2},\frac{1}{n}\sum_{i=1}^{n} X_{i}Y_{i} \right)\) 
+  we can derive the AS distribution of the sample correlation \(r_{n}\)  by multivariate delta theorem. If \((X_{i},Y_{i})\) are iid bivariate Gaussian, then: 
+  \[
+  \sqrt{n}(r_{n}-\rho) \xrightarrow{d}N(0,(1-\rho^{2})^{2})
+  \]  
+  Now we can use VST to calculate the confidence interval of \(\rho\).
+  \[
+  g(\rho)=\int \frac{1}{1-\rho^{2}}d \rho=\frac{1}{2}\log \frac{1+\rho}{1-\rho}=\operatorname{arctanh}(\rho)
+  \] 
+  which is known as Fisher's z.
+\end{example}
+\subsection{Approximation of moments}
+The core of this section is Taylor expansion as well.
+
+\begin{theorem}
+  \(X_{n}\xrightarrow{d}X\) for some X + \(\sup_{n} E|X_{n}|^{k+\delta}<\infty\) for some \(\delta>0 \Rightarrow E(X_{n}^{r})\to E(X^{r}), \forall 1\le r \le k\)   
+\end{theorem}
+\begin{theorem}[von Bahr]
+  iid and finite variance, and for some k, \(E|X_{1}|^{k}<\infty\). Suppose \(Z\sim N(0,1)\), then: 
+  \[
+  E(\frac{\sqrt{n}(\overline{X}_n-\mu)}{\sigma})^{r}=E(Z^{r})+O(\frac{1}{\sqrt{n}}) ,\forall r\le k
+  \]   
+\end{theorem}
+\begin{proposition}
+  iid, finite fourth moment, g has four uniformly bounded derivatives. 
+  \[
+  (i)E(g(\overline{X}_n))=g(\mu)+\frac{g''(\mu)\sigma^{2}}{2n}+O(n^{-2})  
+  \] 
+  \[
+  (ii)\operatorname{Var}(g(\overline{X}_{n}))=\frac{(g'(\mu))^{2}\sigma^{2}}{n}+O(n^{-2})
+  \] 
+  we can simply prove them by Taylor expansion w.r.t. \(g(\overline{X}_{n})\) at \(\mu\) 
+\end{proposition}
+\begin{example}[去年考了]
+  iid, Poisson(\(\mu\)) and wish to estimate \(P(X_{1}=0)=e^{-\mu}\).
+  
+  See the MLE \(e^{-\overline{X}_{n}}\), we estimate its MSE, so we should estimate its expectation and variance using the proposition above. 
+  We have: \(\operatorname{Bias}(e^{-\overline{X}_{n}})=\frac{\mu e^{-\mu}}{2n}+O(n^{{-2}})\). So \(\operatorname{MSE}(e^{-\overline{X}_n})=\frac{\mu e^{-2\mu}}{n}+O(n^{{-2}})\)   
+
+  See the sign statistic \(T=\frac{1}{n}\sum_{i=1}^{n} I(X_{i}=0)\), which is unbiased. 
+  
+  For: 
+  \[
+  I(X_{i}=0)I(X_{j}=0)\ge I^{2}(X_{i}=0)=I(X_{i}=0)(i\neq j)
+  \] 
+  Then: 
+  \[
+  \operatorname{MSE}(T)=\operatorname{Var}(T)=ET^{2}\ge \frac{1}{n^{2}}\cdot n^{2}\cdot E(I(X_{1}=0))=P(X_{1}=0)=e^{-\mu}
+  \] 
+  Now we can compare these two statistics. 
+\end{example}
+\subsection{Multivariate-version Edgeworth expansion}
+\section{The basic sample statistics}
+P55
+empirical cumulative distribution function: ECDF
+\[
+F_{n}(x)=\frac{1}{n}\sum_{i=1}^{n} I_{\{X_{i}\le x\}}
+\] 
+\subsection{The sample distribution}
+\subsubsection{Basic properties}
+\begin{proposition}
+  Note that 
+  \[
+  nF_{n}(x)\sim \operatorname{BIN}(F(x),n)
+  \] 
+  then we have: AS \(\xrightarrow{wp1},\xrightarrow{2nd}\) and AS distribution.
+\end{proposition}
+\subsubsection{Kolmogorov-Smirnov distance}
+\[
+D_{n}=\sup_{-\infty<x<\infty}|F_{n}(x)-F(x)|.
+\]  
+can be denoted as \(\|F_{n}(x)-F(x)\|_{\infty}\)
+\begin{theorem}[DKW's inequality]
+  \(F_{n}\) is the ECDF, then exists a positive constant C s.t. 
+  \[
+  P(D_{n}>z)\le Ce^{-2nz^{2}},z>0,\forall n=1,2,\ldots,
+  \]  
+  Or: 
+  \[
+  P(\sqrt{n}D_{n}>z)\le Ce^{-2z^{2}},z>0,\forall n=1,2,\ldots,
+  \] 
+  which clearly demonstrate that: 
+  \[
+  \sqrt{n}D_{n}=O_{p}(1)
+  \]  
+\end{theorem} 
+\begin{theorem}[Massart]
+  If \(nz^{2}\ge \frac{\log 2}{2}\), then C can equal to 2.  
+\end{theorem}
+\begin{corollary}
+  Let \(h_{\epsilon}=e^{-2\epsilon^{2}},P(\sup _{m\ge n}D_{m}>\epsilon)\le \frac{C}{1-h_{\epsilon}}h_{\epsilon}^{n}\)
+  
+  Using: \(\cap \le \sum\) 
+\end{corollary}
+\begin{theorem}[Glivenko-Cantelli]
+  \[
+  D_{n}\xrightarrow{wp1}0
+  \] 
+\end{theorem}
+\begin{theorem}[Kolmogorov]
+  Let F be continuous, then: 
+  \[
+  \lim_{n\to \infty}P(\sqrt{n}D_{n}\le z)=1-2 \sum_{j=1}^{\infty} (-1)^{j+1} e^{-2j^{2}z^{2}},z>0
+  \] 
+  This is the null AS distribution of K-S statistics! No need to remember.
+\end{theorem}
+\begin{proposition}
+  Let F be continuous, then \(\sqrt{n}D_{n}\) is distribution-free w.r.t. F. 
+\end{proposition}
+proof: choose \(x_{i}'s\) s.t. \(F(x_{i})=\frac{i}{n},i=1,\ldots,n\). Then \(\sup_{x\in (x_{i-1},x_{i})}|F_{n}(x)-F(x)|=\max\{\frac{i}{n}-F(x),F(x)-\frac{i-1}{n}\}\)  
+, so we have: \(\sqrt{n}d_{n}\overset{\text{d}}{=}\sqrt{n}\max_{0\le i\le n}\max (\frac{i}{n}-U_{(i)},U_{(i)}-\frac{i-1}{n})\), where \(U_{(1)}\le \ldots\le U_{(n)}\) are order statistics of an indep sample from U(0,1)
+
+A consequence: given \(\alpha\in (0,1)\), there is a well-defined \(d=d_{\alpha,n}\) such that, for any 
+continuous CDF F, \(P_{F}(\sqrt{n}D_{n}>d)=\alpha\)   
+\begin{example}[Kolmogorov-Smirnov confidence intervals]
+  We choose a \(d=d_{\alpha,n}\) like above, then: 
+  \begin{align*}
+    1-\alpha&=P_{F}(\sqrt{n}D_{n}\le d)=P_{F}(\sqrt{n}\| F_{n}-F\|_{\infty}\le d)\\
+    &=P_{F}(|F_{n}-F|\le \frac{d}{\sqrt{n}},\forall x)\\
+    &=P_{F}(F_{n}(x)-\frac{d}{\sqrt{n}}\le F(x)\le F_{n}(x)+\frac{d}{\sqrt{n}},\forall x)
+  \end{align*}
+\end{example}
+\subsubsection{Applications: Kolmogorov-Smirnov and other ECDF-based GOF(goodness-of-fit)tests}
+\(D_{n},C_{n},A_{n}\), for Sparse, Dense respectively. 
+
+\begin{proposition}
+  \(C_{n},A_{n}\) are both distribution-free 
+\end{proposition}
+Power to 1. 
+
+consider a CDF \(F_{1}\), so that there exists \(\eta\) such that \(F_{1}(\eta)\neq F_{0}(\eta)\). Let \(G_{n}^{-1}(1-\alpha)\) denote the \((1-\alpha)\)th quantile of the distribution of 
+\(\sqrt{n}D_{n}\) under \(F_{0}\) and by Th 3.1.4 it is an O(1). Note that under \(F_{1}\), there is \(\sqrt{n}(F_{n}(\eta)-F_{1}(\eta))=O_{p}(1)\)  
+We write the \(D_{n}\) by definition and plug in the \(F_{1}(t)\), then goes to \(\eta\). 
+We have: 
+\[
+P_{F_{1}}(\sqrt{n}D_{n}>G_{n}^{-1}(1-\alpha))\geq P_{F_{1}}(|\sqrt{n}(F_{n}(\eta)-F_{1}(\eta))+\sqrt{n}(F_{1}(\eta)-F_{0}(\eta))|>G_{n}^{-1}(1-\alpha))\to 1
+\]                                                                                                                            
+\begin{example}[The Berk-Jones procedure]
+  \[
+  H_{0}: F=F_{0}
+  \] 
+  For any given x, we have: \(nF_{n}(x)\sim \operatorname{Bin}(n,F(x))\), if we write p for F(x) and \(p_{0}\) for \(F_{0}(x)\), that's to test \(p=p_{0}\).
+  The likelihood maximized at \(F(x)=F_{n}(x)\). So the likelihood ratio statistic is: 
+  \[
+  \lambda_{n}(x)=\frac{F_{n}(x)^{nF_{n}(x)}(1-F_{n}(x))^{n-nF_{n}(x)}}{F_{0}(x)^{nF_{0}(x)}(1-F_{0}(x))^{n-nF_{0}(x)}}
+  \] 
+So the Berk-Jones statistic is: \(R_{n}=n ^{-1} \sup_{x}\log \lambda_{n}(x)\) 
+\end{example}
+\begin{example}[The two-sample case]
+  anagolous to one-sample case, we have \(D_{m,n}, A_{m,n}\) 
+\end{example}
+\subsubsection{The Chi-square test}
+Suppose \(X_{1},\ldots,X_{n}\) are iid from F, and \(F=F_{0}\), \(F_{0}\) being completely specified. Let \(S\) be the support of \(F_{0}\), and given k, \(A_{ki},i=1,\ldots,k\) be a partition of \(S\). 
+Let \(p_{0i}=P_{F_{0}}(A_{ki})\) and \(n_{i}=\operatorname{\#}\{j:x_{j}\in A_{ki}\}\), i.e. the observed frequency of the partition set \(A_{ki}\).
+Therefore, under \(H_{0}, E(n_{i})=np_{0i}\), with which we compare \(n_{i}\). 
+\[
+K^{2}=\sum_{i=1}^{k} \frac{(n_{i}-np_{0i})^{2}}{np_{0i}}
+\]             
+\begin{theorem}[The asymptotic null distribution]
+  Under \(H_{0},K^{2}\xrightarrow{d}\chi^{2}_{k-1}\) 
+\end{theorem}
+This proof is essential, on P62. 
+
+\(\boldsymbol{n}=(n_{1},\ldots,n_{k})^{T}=\sum_{i=1}^{n} \boldsymbol{Z}_{i}\) is iid. So by multivariate CLT, there is \(\frac{\boldsymbol{n}-n \boldsymbol{p}_{0}}{\sqrt{n}}\xrightarrow{d}N_{k}(\boldsymbol{0},diag(\boldsymbol{p}_{0})-\boldsymbol{p}_{0}\boldsymbol{p}_{0}^{T})\)  
+
+And \(K^{2}=\boldsymbol{Y}=diag ^{-1}(\mu)\frac{\boldsymbol{n}-n \boldsymbol{p}_{0}}{\sqrt{n}}\), where \(\mu=(\sqrt{p_{01}},\ldots, \sqrt{p_{0k}})^{T}\), and \(\boldsymbol{Y}\overset{\text{d}}{=}N_{k}(\boldsymbol{0},\boldsymbol{\Sigma})\), where \(\Sigma=\boldsymbol{I}_{k}-\boldsymbol{\mu}\boldsymbol{\mu}^{T}\)    
+
+The following is an important proof for \(K^{2}=\boldsymbol{Y}^{T} \boldsymbol{Y}\xrightarrow{d}\chi^{2}_{k-1}\). 
+
+For \(\operatorname{tr}(\boldsymbol{\Sigma})=k-1\), and \(\boldsymbol{\Sigma}\) is symmetric and idempotent, there exists an orthogonal matrix \boldsymbol{P} s.t. \(\boldsymbol{P}^{T}\boldsymbol{\Sigma}\boldsymbol{P}=diag(\lambda_{1},\ldots,\lambda_{k})\), where there is only one 0 in \(\lambda_{i}'s\), the others are all 1.
+Let \(\boldsymbol{Y}=\boldsymbol{P}\boldsymbol{X}\), we have \(K^{2}=\boldsymbol{Y}^{T}\boldsymbol{Y}=\boldsymbol{X}^{T}\boldsymbol{X}=\sum_{i=1}^{k} \lambda_{i}w_{i}\text{ with } w_{i}\overset{\text{iid}}{\sim}\chi_{1}^{2}\), namely \(K^{2}\xrightarrow{d}\chi_{k-1}^{2}\)   
+
+\begin{example}[The Hellinger statistic]
+For \(\sqrt{n}(\boldsymbol{g}(\overline{\boldsymbol{Z}}_{n})-\boldsymbol{g}(\boldsymbol{p}_{0}))\overset{\text{d}}{=}\sqrt{n}\nabla \boldsymbol{g}(\boldsymbol{p}_{0})(\overline{\boldsymbol{Z}}_{n}-\boldsymbol{p}_{0})\), so that in Pearson's \(\chi^{2}\), we may replace 
+\(\sqrt{n}(\overline{\boldsymbol{Z}}_{n}-\boldsymbol{p}_{0})\) by \(\sqrt{n}\nabla ^{-1}\boldsymbol{g}(\boldsymbol{p}_{0})(\boldsymbol{g}(\overline{\boldsymbol{Z}}_{n})-\boldsymbol{g}(\boldsymbol{p}_{0}))\). When we take \(\boldsymbol{g}(\boldsymbol{x})=(\sqrt{x_{1}}, \sqrt{x_{k}})^{T}\), we have the Hellinger statistic.         
+\end{example}
+See \(F_{1}\) for Pearson's \(\chi^{2}\).
+
+\begin{proposition}
+  Under \(F_{1}\), there is \(\frac{n_{i}}{n}\xrightarrow{p}p_{1i}\), so according to CMT, we have \(\frac{K^{2}}{n}\xrightarrow{p}\sum_{i=1}^{k} \frac{(p_{1i}-p_{0i})^{2}}{p_{0i}}\)  
+\end{proposition}
+Local alternatives: 
+\[
+p_{1i}=p_{0i}+\delta_{i}n^{-1/2}
+\] 
+where: 
+\[
+\boldsymbol{1}^{T}\boldsymbol{\delta}=\sum_{i}^{} \delta_{i}=0
+\] 
+\begin{theorem}[The asymptotic alternative distribution]
+  Under \(H_{1}\), say \(\boldsymbol{p}=\boldsymbol{p}_{1}=\boldsymbol{p}_{0}+\boldsymbol{\delta}n^{-1/2}\). Then \(K^{2}\xrightarrow{d}\chi_{k-1}^{2}(\lambda)\), where \(\lambda=\sum_{i=1}^{k} \frac{\delta^{2}_{i}}{p_{0i}}\) is the noncentrality parameter.     
+\end{theorem}
+See homework for a proof. 
+\subsection{The sample moments}
+We define kth moment and central moment of F as: 
+\begin{align*}
+  &\alpha_{k}=\int_{-\infty}^{\infty}x_{k}dF(x)=EX_{1}^{k}\\
+  &\mu_{k}=\int_{-\infty}^{\infty}(x-\alpha_{1})^{k}dF(x)=E[(X_{1}-\alpha_{1})^{k}]
+\end{align*} 
+The sample moments: 
+\[
+a_{k}=\int_{-\infty}^{\infty}x_{k}dF_{n}(x)=\frac{1}{n}\sum_{i=1}^{n} X_{i}^{k}
+\] 
+\[
+m_{k}=\int_{-\infty}^{\infty}(x-\alpha_{1})^{k}dF_{n}(x)=\frac{1}{n}\sum_{i=1}^{n} (X_{i}-a_{1})^{k}
+\] 
+\begin{proposition}
+  \(a_{k}\xrightarrow{wp1}\alpha_{k};E(a_{k})=\alpha_{k};\operatorname{Var}(a_{k})=\frac{\alpha_{2k}-\alpha_{k}^{2}}{n}\) 
+\end{proposition}
+\begin{proposition}
+  \(\sqrt{n}(a_{1}-\alpha_{1},\ldots,a_{k}-\alpha_{k})^{T}\) is \(\operatorname{AN}_{k}(\boldsymbol{0},\boldsymbol{\Sigma})\), where \(\boldsymbol{\Sigma}=(\sigma_{ij})_{k\times k}\) with \(\sigma_{ij}=\alpha_{i+j}-\alpha_{i}\alpha_{j}\).   
+\end{proposition}
+\begin{proposition}
+  The same as 3.2.2. It's the properties for \(b_{k}=\frac{1}{n}\sum_{i=1}^{n} (X_{i}-\alpha_{1})^{k}\) 
+\end{proposition}
+\begin{proposition}
+  Properties for \(\mu_{k}\), we find the connection between \(m_{k}\) and \(b_{j}'s\) using the binomial theorem. And use CMT and multivariate Delta Th.    
+\end{proposition}
+\subsection{The sample quantiles}
+Definition of quantile: 
+\[
+F ^{-1}(p)\equiv \xi_{p}=\inf \{x:F(x)\geq p\}.
+\] 
+\[
+F_{n}^{-1}(p) \equiv \hat{\xi}_{p}=\inf\{x:F_{n}(x)\ge p\}
+\] 
+\subsubsection{Basic results}
+\begin{theorem}
+  \[
+  P(|\hat{\xi}_{p}-\xi_{p}|>\epsilon)\le 2Ce^{-2n\delta_{\epsilon}^{2}}
+  \] 
+\end{theorem}
+using DKW's inequality to prove it. We can get strong consistency from it as well.
+
+For \(P(\hat{\xi}_{p}\le t)=P(F_{n}(t)\ge p)\), and \(nF_{n}(t)\) is binomial, so we can get the distribution of \(\hat{\xi}_{p}\)  
+
+\begin{theorem}
+  The AS distribution of \(\sqrt{n}(\hat{\xi}_{p}-\xi_{p})\) exists when F is continuous at \(\xi_{p}\). When \(F'(\xi_{p})>0\) exists, we can get the conclusion we derive in the Bahadur.
+\end{theorem}
+proof is omited. 
+\subsubsection{Bahadur's representation}
+\begin{theorem}[Bahadur's representation]
+Let \(X_{1},\ldots,X_{n}\) be iid random variables from a CDF F. Suppose that \(F'(\xi_{p})\) exists and is positive. Then 
+\[
+\hat{\xi}_{p}=\xi_{p}+\frac{F(\xi_{p})-F_{n}(\xi_{p})}{F'(\xi_{p})}+o_{p}(n^{-1/2})
+\]    
+\end{theorem}
+This proof in at P71, representing a pattern for proof. The lemma below is used.  
+\begin{lemma}
+  \(X_{n}\) bounded in probability+\(\lim_{n}[P(X_{n}\le t,Y_{n}\ge t+\epsilon)+P(X_{n}\ge t+\epsilon,Y_{n}\le t)]=0\Rightarrow X_{n}\xrightarrow{p}Y_{n}\)  
+\end{lemma}
+plug in \(|X_{n}-Y_{n}|\le\ge \epsilon\)
+\begin{corollary}
+  \[
+  \sqrt{n}[(\hat{\xi}_{p1},\ldots,\hat{\xi}_{pm})-(\xi_{p1},\ldots,\xi_{pm})]\xrightarrow{d}N_{m}(0,\boldsymbol{D})
+  \]
+  where,  
+  \[
+  D_{ij}=p_{i}(1-p_{j})/[F'(\xi_{pi})F'(\xi_{pj})]
+  \] 
+\end{corollary}
+The proof is important, see the homework for the idea of the proof. 
+\begin{example}[Interquartile range; IQR]
+  IQR=\(\hat{\xi}_{0.75}-\hat{\xi}_{0.25}\), we can derive the AS distribution using the idea of the corollary above. When the sample comes from Gaussian distribution, we can use IQR/1.35 to estimate \(\sigma\).  
+\end{example}
+\begin{example}[Gastwirth estimate]
+  \(F(x-\mu),F(-x)=1-F(x)\), wish to estimate \(\mu\). One idea is to use L-statistics, i.e. a convex combination of order statistics. Gastwirth is: \(0.3X_{(n/3)}+0.4X_{(n/2)}+0.3X_{(2n/3)}\)   
+\end{example}
+\begin{corollary}
+  \sqrt{n}(\overline{X}_{n}-\mu,F_{n}^{-1}(p)-\xi_{p})\xrightarrow{p}N_{2}(\boldsymbol{0},\boldsymbol{\Sigma})
+\end{corollary}
+
+Vital. See homework for the proof. 
+
+Hint: \(-\sqrt{2\pi}\int_{-\infty}^{0}x\phi(x)dx=1\) 
+\subsubsection{Confidence intervals for quantiles}
+Hint: \[
+(F(X_{(1)},F_{X_{(2)}}),\ldots,F(X_{(n)}))\overset{\text{d}}{=}(U_{(1)},U_{(2)},\ldots,U_{(n)})
+\] 
+We want to derive a distribution-free confidence for \(\xi_{p}\) 
+
+We can derive the AS distribution of \(\sqrt{n}\hat{\xi}_{p}\) and then the wald CI of \(\xi_{p}\), but it is not distribution-free.
+
+One idea is to involve the \(X_{(i)}\) in.
+
+\begin{theorem}
+  Bahadur's condition+integer sequence $k_{n}+1\le k_{n}\le n$" + "$k_{n}/n=p+cn^{-1/2}+o(n^{-1/2})$ with a constant c. Then, \(\sqrt{n}(X_{(k_{n})}-\hat{\xi}_{p})\xrightarrow{p}\frac{c}{F'(\xi_{p})}\) 
+\end{theorem}
+Similar proof as Theorem 3.3.3.
+\begin{corollary}
+  \(k_{1n} \text{ and }k_{2n}\) satisfy the condition above with c=\(-z_{\alpha/2}\sqrt{p(1-p)}\) and \(z_{\alpha/2}\sqrt{p(1-p)}\) respectively.
+  Then: 
+  \[
+  P_{F}(X_{(k_{1n})}\le \xi_{p}\le X_{(k_{2n})})=P_{F}(F(X_{(k_{1n})})\le p\le F(X_{(k_{2n})}))=P(U_{(k_{1n})}\le p\le U_{(k_{2n})})\to \alpha
+  \]  
+\end{corollary}
+\subsubsection{Quantile regression}
+fit along the pth quantile. 
+\section{Asymptotics in parametric inference}
+\subsection{Asymptotic efficient estimation}
+\[
+(\hat{\boldsymbol{\theta}}_{n}-\boldsymbol{\theta})\sim AN_{k}(\boldsymbol{0},\boldsymbol{V}_{n}(\boldsymbol{\theta}))
+\] 
+
+If \(\boldsymbol{V}_{1n}(\boldsymbol{\theta})\le \boldsymbol{V}_{2n}(\boldsymbol{\theta})\), say \(\hat{\boldsymbol{\theta}}_{1n}\) is asymptotically more efficient than \(\hat{\boldsymbol{\theta}}_{2n}\)  
+
+\begin{definition}
+  Assume the Fisher information matrix: 
+  \[
+  \boldsymbol{I}_{n}(\boldsymbol{\theta})=E\left\{ \frac{\partial }{\partial \boldsymbol{\theta}} \sum_{i}^{} \log f_{\boldsymbol{\theta}}(X_{i})[\frac{\partial }{\partial \boldsymbol{\theta}} \sum_{i}^{} \log f_{\boldsymbol{\theta}}(X_{i})]^{T} \right\}
+  \] 
+  is well defined and positive definite for every n. A sequence of estimators \(\hat{\boldsymbol{\theta}}_{n}\) satisfying the one above is sard to be asymptotically efficient iff \(\boldsymbol{V}_{n}(\boldsymbol{\theta})=[\boldsymbol{I}_{n}(\boldsymbol{\theta})]^{-1}\)  
+\end{definition}
+When \(\boldsymbol{\beta}=g(\boldsymbol{\theta})\), we deal with it by Delta theorem.
+
+The information inequality is right under regularity conditions, and MLE asymptotically reaches CR bounds. A famous example can be seen at P81 to P82. 
+\subsection{Maximum likelihood estimation}
+Let \(\boldsymbol{X}=\{X_{1},\ldots,X_{n}\}\) be iid with distribution \(F_{\boldsymbol{\theta}}\) belonging to a family \(F=\{F_{\boldsymbol{\theta}}:\boldsymbol{\theta}=(\theta_{1},\ldots,\theta_{k})^{T}\}\) 
+. Then the likelihood function is: 
+\[
+L(\boldsymbol{\theta};\boldsymbol{X})=\prod_{i=1}^{n}f_{\boldsymbol{\theta}}(X_{i}).
+\] 
+And the MLE is given by: \(\hat{\boldsymbol{\theta}}=\operatorname{argmax}_{\boldsymbol{\theta}\in \boldsymbol{\Theta}}\log L(\boldsymbol{\theta};\boldsymbol{X})\). We say MLE must be a root of the likelihood equation(RLE): 
+\[
+\frac{\partial \log L}{\partial \theta_{i}} \Big|_{\boldsymbol{\theta}=\hat{\boldsymbol{\theta}}}=0
+\] 
+But RLE may not be an MLE. We focus on the case of k=1(one-dimension) for simplicity. 
+
+Regularity condition at P83
+
+\begin{theorem}
+  Assume regularity conditions on the family F. Consider iid observations on \(F_{\theta_{0}}\), with \(\theta_{0}\in \Theta\). Then with probability 1, the likelihood equations admit a sequence of solutions \(\{\hat{\theta}_{n}\}\) satisfying: 
+  
+  (i) strong consistency: \(\hat{\theta}_{n}\to \theta_{0}\) 
+
+  (ii)asymptotic normality and efficiency: \(\hat{\theta}_{n}\) is \(AN(\theta_{0},[nI(\theta_{0})]^{-1})\) 
+\end{theorem}
+We first write the important definition and properties. 
+
+Definition of score function: 
+\[
+s(\boldsymbol{X},\theta)=\frac{1}{n}\frac{\partial \log L(\theta;\boldsymbol{X})}{\partial \theta} =\frac{1}{n}\sum_{i=1}^{n} \frac{\partial \log f_{\theta}(X_{i})}{\partial \theta} 
+\] 
+
+By CLT(it's iid sum), we have: 
+\[
+\sqrt{n}s(\boldsymbol{X},\theta_{0})\xrightarrow{d}N(0,I(\theta_{0}))
+\] 
+
+for \[E_{\theta_{0}}[s(\boldsymbol{X},\theta_{0})]=E_{\theta_{0}}[\frac{\partial \log f_{\theta_{0}}(X_{1})}{\partial \theta_{0}} ]=\int \frac{1}{f_{\theta_{0}}(x)}\frac{\partial f_{\theta_{0}}(x)}{\partial \theta_{0}} f_{\theta_{0}}(x)dx=0\]
+\[\operatorname{Var}(\frac{\partial \log f_{\theta_{0}}(X_{1})}{\partial \theta_{0}} )=E_{\theta_{0}}(\frac{\partial \log f_{\theta_{0}}(X_{1})}{\partial \theta_{0}} )^{2}=-E_{\theta_{0}}(\frac{\partial^{2} \log f_{\theta_{0}}(X_{1})}{\partial \theta_{0}^{2}} )=-E_{\theta_{0}}[s'(\boldsymbol{X},\theta_{0})]=I(\theta_{0})\]  
+
+where we can prove the essential ineq by: 
+\[
+E_{\theta}(\frac{\partial^{2} \log f_{\theta_{0}}(x)}{\partial \theta_{0}^{2}} )=E_{\theta}(\frac{\partial }{\partial \theta} (\frac{1}{f_{\theta}(x)}\frac{\partial f_{\theta}(x)}{\partial \theta} ))
+\] 
+Note that according to regularity condition, we have: 
+\[
+|s''(\boldsymbol{X},\theta)|\le \frac{1}{n}\sum_{i=1}^{n} |\frac{\partial ^{3}\log f_{\theta}(X_{i})}{\partial \theta^{3}} |\le \frac{1}{n}\sum_{i=1}^{n} |H(X_{i})|\equiv \overline{H}(\boldsymbol{X})
+\] 
+
+Consider Taylor's expandion to the score function: 
+\[
+s(\boldsymbol{X},\hat{\theta}_{n})=s(\boldsymbol{X},\hat{\theta}_{n})=s(\boldsymbol{X},\theta_{0})+s'(\boldsymbol{X},\theta_{0})(\hat{\theta}_{n}-\theta_{0})+\frac{1}{2}\overline{H}(\boldsymbol{X})\eta^{*}(\hat{\theta}_{n}-\theta_{0})^{2}, 
+\] 
+where \(|\eta^{*}|=\frac{|s''(\boldsymbol{X},\xi)|}{\overline{H}(\boldsymbol{X})}\le 1\). Thus: 
+\[
+\sqrt{n}s(\boldsymbol{X},\theta_{0})=\sqrt{n}(\hat{\theta}_{n}-\theta_{0})\left( -s'(\boldsymbol{X},\theta_{0})-\frac{1}{2}\overline{H}(\boldsymbol{X})\eta^{*}(\hat{\theta}_{n}-\theta_{0}) \right)
+\] 
+for \((\hat{\theta}_{n}-\theta_{0})\xrightarrow{wp1}0\) and the properties above, we can use Slutsky Theorem and get: 
+\[
+\sqrt{n}(\hat{\theta}_{n}-\theta_{0})\xrightarrow{d}N(0,I ^{-1}(\theta_{0}))
+\] 
+\subsection{Improving the sub-efficient estimates}
+Method of moments may not be asymptotically efficient, while sometimes \(s(\boldsymbol{X},\theta)=0\) is difficult to solve. We consider Newton's method using the estimates based on the method of moments or sample quantiles as the initial guess. 
+
+Generally, we use: 
+\[
+\hat{\theta}^{(k+1)}  =\hat{\theta}^{(k)}-[s'(\boldsymbol{X},\hat{\theta}^{(k)})]^{-1}s(\boldsymbol{X},\hat{\theta}^{(k)}),k=0,1,2,\ldots
+\] 
+
+If Fisher information is available, then \(s'(\boldsymbol{X},\hat{\theta}^{(k)})\xrightarrow{wp1}-I(\theta^{0})\), then we can also use: 
+\[
+\hat{\theta}^{(k+1)}  =\hat{\theta}^{(k)}+[I(\hat{\theta}^{(k)})]^{-1} s(\boldsymbol{X},\hat{\theta}^{(k)}),k=0,1,2,\ldots
+\] 
+
+This method is the method of scoring. The scores, \([I(\hat{\theta}^{(k)})]^{-1} s(\boldsymbol{X},\hat{\theta}^{(k)})\) are increments added to an estimate to improve it. 
+
+\begin{example}[Logistic distribution]
+  Omited
+\end{example}
+One-step MLE: 
+
+\[
+\hat{\theta}^{(1)}=\hat{\theta}^{(0)}-[s'(\boldsymbol{X},\hat{\theta}^{(0)})]^{-1}s(\boldsymbol{X},\hat{\theta}^{(0)})
+\] 
+
+\begin{theorem}
+  The conditions in Theorem 4.2.1 hold and that \(\hat{\theta}^{(0)}\) is \(\sqrt{n}\)-consistent for \(\theta\). Then: 
+  
+  (i)The one-step MLE is asymptotically efficient
+
+  (ii)The one-step MLE obtained by replacing \(s'(\boldsymbol{X},\hat{\theta}^{(0)})\) with its expected value, \(-I(\hat{\theta}^{(0)})\), is asymptotically efficient.   
+\end{theorem}
+We mainly want to study that \(\sqrt{n}(\hat{\theta}^{(1)}-\hat{\theta}_{n})\xrightarrow{p}0\). By definition, we have \((\hat{\theta}^{(1)}-\hat{\theta}_{n})=(\hat{\theta}^{(0)}-\hat{\theta}_{n})-[s'(\hat{\theta}^{(0)})]^{-1}s(\hat{\theta}^{(0)})\) with \(s(\hat{\theta}_{n})=0\). 
+We conduct taylor expansion to \(s(\hat{\theta}^{(0)})\) at \(\hat{\theta}_{n}\), we can get a approximation of \((\hat{\theta}^{(0)}-\hat{\theta}_{n})\). Prove that \(\sqrt{n}(\hat{\theta}^{(0)}-\hat{\theta}_{n})=O_{p}(1)\) and we get the result.
+
+\subsection{Hypothesis testing by likelihood method}
+\[
+H_{0}:\boldsymbol{\theta}\in \Theta_{0}\text{ versus }H_{1}: \boldsymbol{\theta}\in \Theta_{1}
+\] 
+The likelihood ratio test(LRT) rejects \(H_{0}\) for small values of: \(\Lambda_{n}=\frac{\sup _{\boldsymbol{\theta}\in \Theta_{0}}L(\boldsymbol{\theta};\boldsymbol{X})}{\sup _{\boldsymbol{\theta}\in \Theta_{}}L(\boldsymbol{\theta};\boldsymbol{X})}\)  
+and \(\lambda_{n}=-2\log \Lambda_{n}\) is often used.                 
+\begin{example}
+  We can test t-test is LRT equivalently. 
+\end{example} 
+If we have r constraints on \(\boldsymbol{\theta}\) and only k-r components of it are free to change, which can be denoted as \(\boldsymbol{\vartheta}=(\vartheta_{1},\ldots,\vartheta_{k-r})\) without loss of generality. We can write that:
+\[
+H_{0}: \boldsymbol{\theta}=g(\boldsymbol{\vartheta})
+\]   
+\begin{theorem}[Wilks]
+  Assume the conditions in Theorem 4.2.1 hold, then under \(H_{0},\lambda_{n}\xrightarrow{d}\chi_{r}^{2}\)  
+\end{theorem}
+We conduct Taylor expansion to \(2\log L(\hat{\boldsymbol{\theta}}_{n})\) at \(\boldsymbol{\theta}_{0}\), and using the Taylor expansion in the proof of Theorem 4.2.1 to approximate \(\hat{\boldsymbol{\theta}}_{n}-\boldsymbol{\theta}_{0}\). The operation before is conduct to the case under \(H_{0}\) as well.  
+
+Finally we get \(\lambda_{n}=n[s(g(\boldsymbol{\vartheta}_{0}))]^{T}([\boldsymbol{I}(g(\boldsymbol{\vartheta}))]^{-1}-[\boldsymbol{D}(\boldsymbol{\vartheta})]^{T}[\tilde{\boldsymbol{I}}(\boldsymbol{\vartheta})]^{-1}\boldsymbol{D}(\boldsymbol{\vartheta}))s(g(\boldsymbol{\vartheta}_{0}))+o_{p}(1)\). Note the \(s(\boldsymbol{\theta}_{0})\)
+ is asymptotically normal by CLT. So we need only to check the matrix in the middle is idempotent and symmetrix with trace=r. Then by proof of Theorem 3.1.5, we can get the result. 
+\begin{example}
+  Under \(H_{1}\), the \(\lambda_{n}\) in the last example is to infinity.   
+\end{example}  
+\subsection{The Wald and Rao score tests}
+\[
+H_{0}:R(\boldsymbol{\theta})=0
+\] 
+The Wald test: 
+\[
+W_{n}=[R(\hat{\boldsymbol{\theta}}_{n})]^{T}\left\{ [C(\hat{\boldsymbol{\theta}}_{n})]^{T}[\boldsymbol{I}_{n}(\hat{\boldsymbol{\theta}}_{n})]^{-1}C(\hat{\boldsymbol{\theta}}_{n}) ^{-1}\right\}R(\hat{\boldsymbol{\theta}}_{n})
+\] 
+where \(\hat{\boldsymbol{\theta}}_{n}\) is an MLE or RLE of \(\theta  \), \(C(\boldsymbol{\theta})=\frac{\partial R(\boldsymbol{\theta})}{\partial \boldsymbol{\theta}} \).
+
+The Rao score test: 
+\[
+R_{n}=n[s(\tilde{\boldsymbol{\theta}}_{n})]^{T}[\boldsymbol{I}(\tilde{\boldsymbol{\theta}}_{n})]^{-1}s(\tilde{\boldsymbol{\theta}}_{n})
+\] 
+\begin{theorem}
+  Assume the conditions in Theorem 4.2.1 hold. Under \(H_{0}\) we have: 
+  
+  (i)\(W_{n}\xrightarrow{d}\chi_{r}^{2}\)
+
+  (ii)\(R_{n}\xrightarrow{d}\chi_{r}^{2}\)  
+\end{theorem}
+(i) We know the asymptotic distribution of the MLE by theorem 4.2.1, and with Delta theorem and Slutsky theorem, we can simply get the result. Note that under \(H_{0},R(\boldsymbol{\theta}_{0})=0.\) 
+
+(ii) By Lagrange multipliers and Taylor expansion on \(R(\tilde{\boldsymbol{\theta}}_{n})\) at \(\boldsymbol{\theta}_{0}\) and \(s(\tilde{\boldsymbol{\theta}}_{n})\) at \(\boldsymbol{\theta}_{0}\), where \(\tilde{\boldsymbol{\theta}}_{n}\) is from the Lagrange. see P96 and P96-.
+
+Thus Wald's test, Rao's test and LRT are asymptotically equivalent. Wald needs \(\hat{\boldsymbol{\theta}}_{n}\), Rao needs \(\tilde{\boldsymbol{\theta}}_{n}\), and LRT needs both.   
+
+\subsection{Confidence sets based on likelihoods}
+Suppose \(A(\boldsymbol{\theta}_{0})\) is the acceptance region of a size \(\alpha\) test for \(H_{0}\) and then \(C(\boldsymbol{X})=\left\{ \boldsymbol{\theta}:\boldsymbol{X}\in A(\boldsymbol{\theta}) \right\}\) is a \(1-\alpha\) asymptotically correct confidence set for \(\boldsymbol{\theta}\) due to \(P_{\boldsymbol{\theta}_{0}}(\boldsymbol{\theta}_{0}\in C(x))=1-\alpha\).   
+\section{Asymptotics in nonparametric inference}
+\subsection{Sign test (Fisher)}
+\subsubsection{Test procedure}
+\[
+H_{0}:\theta=0\text{ versus }H_{1}:\theta>0
+\] 
+
+or 
+\[
+H_{0}:\theta=\theta_{0}\text{ versus }H_{1}:\theta>\theta_{0}
+\] 
+The sign test is a test for the median \(\theta\) . Sign test: 
+\[
+S_{n}=\sum_{i=1}^{n} I(X_{i}>\theta_{0})
+\] 
+Large value of \(S_{n}\) leads to reject \(H_{0}\). And we have: 
+\[
+S_{n}\overset{H_{kjkj0}}{\sim} \operatorname{BIN}(n,\frac{1}{2})
+\]  
+And the p-value is \(P(\operatorname{BIN}(n,\frac{1}{2})\ge S_{n})\) 
+
+In the case of \(\theta_{0}=0\), we can derive the power of \(S_{n}\) by \(\frac{S_{n}-np_{\theta}}{[np_{\theta}(1-p_{\theta})]_{1/2}}=\frac{S_{n}-n(1-F(0))}{[n(1-F(0))(F(0))]^{1/2}}\)   
+
+\subsubsection{Asymptotic Properties}
+\begin{definition}[Consistency]
+  Let \(\{\phi_{n}\}\) be a sequence of tests for \(H_{0}:F\in \Omega_{0}\text{ versus }H_{1}:F\in \Omega_{1}\). Then \(\phi_{n}\) is consistent against the 
+  alternatives \(\Omega_{1}\) if 
+  
+  (i) \(E_{F}(\phi_{n})\to \alpha\in (0,1),\forall \in \Omega_{0}\) 
+
+  (ii) \(E_{F}(\phi_{n})\to 1,\forall F\in \Omega_{1}\) 
+\end{definition}
+\begin{example}
+  \(X_{1},\ldots,X_{n}\) is an iid sample from \(\operatorname{Cauchy}(\theta,1)\), then \(\overline{X}_{n}\) obeys \(\operatorname{Cauchy}(\theta,1)\). Let k be the \(\alpha\)th quantile of the \(\operatorname{Cauchy}(0,1)\), then we can derive the power of the test for the case \(\theta_{0}=0\). 
+  \[
+  P_{\theta}(\overline{X}_{n}>k)=P(C(\theta,1)>k)=P(\theta+C(0,1)>k)=P(C(0,1)>k-\theta)
+  \]        
+  which is a fixed number unrelated to n. 
+\end{example}
+\begin{theorem}
+  If F is a continuous CDF with unique median \(\theta  \), then the sign test is consistent for tests on \(\theta\).   
+\end{theorem}
+Note that \(\frac{1}{n}S_{n}-p_{\theta}\xrightarrow{p}0\) under any F. We choose the critical value under \(H_{0}\) as \(k_{n}=\frac{n}{2}+z_{\alpha}\sqrt{\frac{n}{4}}\). So under \(H_{1}\), it follows that \(\frac{1}{n}k_{n}-p_{\theta}<0\) for large n (\(p_{\theta}=P_{\theta}(X_{1}>\theta_{0})>\frac{1}{2}\) )     
+
+If \(\sqrt{n}(\hat{\theta}_{1n}-\theta)\xrightarrow{d}N(0,\sigma_{1}^{2}(\theta))\) and \(\sqrt{n}(\hat{\theta}_{2n}-\theta)\xrightarrow{d}N(0,\sigma_{2}^{2}(\theta))\), then the asymptotic relative efficiency (ARE) of \(\hat{\theta}_{2n}\) with respect to \(\hat{\theta}_{1n}\) is \(\frac{\sigma_{1}^{2}(\theta)}{\sigma_{2}^{2}(\theta)}\)   
+
+The idea of comparing two tests: the threshold sample size to reach the size and power. 
+Suppose we use statistics T s.t. large values of them correspond to rejection of \(H_{0}\), \(\alpha,\beta\) is the type one error and the power of the test. Suppose \(n(\alpha,\beta,\theta,T)\) is the smallest sample size s.t.
+\[
+P_{\theta_{0}}(T_{n}\ge c_{n})\le \alpha,P_{T_{n}\ge c_{n}}\ge \beta
+\]   
+Then two tests based on statistics \(T_{1n}\) and \(T_{2n}\) can be compared through: 
+\[
+e(T_{2},T_{1})=\frac{n(\alpha,\beta,\theta,T_{1})}{n(\alpha,\beta,\theta,T_{2})}
+\]   
+which is called Pitman ARE, and \(T_{1n}\) is preferred if the ratio is less than 1. 
+\begin{theorem}
+  Let \(-\infty<h<\infty\) and \(\theta_{n}=\theta_{0}+\frac{h}{\sqrt{n}}\). Consider the following conditions: (i)exists \(\mu(\theta),\sigma(\theta)\),s.t., for all h, \(\frac{\sqrt{n}(T_{n}-\mu(\theta_{n}))}{\sigma(\theta_{n})}\xrightarrow{d}N(0,1)\)  (ii)\(\mu'(\theta_{0})>0\) (iii)\(\sigma(\theta_{0})>0\) 
+  Then: 
+  \[
+  e(T_{2},T_{1})=\frac{\sigma_{1}^{2}(\theta_{0})}{\sigma_{2}^{2}(\theta_{0})}[\frac{\mu_{2}'(\theta_{0})}{\mu_{1}'(\theta_{0})}]^{2}
+  \]   
+\end{theorem} 
+The proof is possibly to occur in the exam. 
+
+\begin{proof}
+\[
+\frac{\sqrt{n_{1}}(T_{1}-\mu_{1}(\theta_{n}))}{\sigma_{1}(\theta_{n})}\xrightarrow{H_{1}}N(0,1),\frac{\sqrt{n_{1}}(T_{1}-\mu_{1}(\theta_{0}))}{\sigma_{1}(\theta_{0})}\xrightarrow{H_{0}}N(0,1)
+\]   
+We can get the critical value: \(c_{1}=\mu_{1}(\theta_{0})+z_{\alpha}\frac{\sigma_{1}(\theta_{0})}{\sqrt{n_{1}}}\) 
+
+Then the power under \(H_{1}\) is: 
+
+\begin{align*}
+  P_{H_{1}}(T_{1}>c_{1})&=P_{H_{1}}(T_{1}>\mu_{1}(\theta_{0})+z_{\alpha}\frac{\sigma_{1}(\theta_{0})}{\sqrt{n_{1}}})\\
+  &=P_{H_{1}}(\frac{\sqrt{n_{1}}(T_{1}-\mu_{1}(\theta_{n}))}{\sigma_{1}(\theta_{n})}>\frac{\sqrt{n_{1}}(\mu_{1}(\theta_{0})-\mu_{1}(\theta_{n}))}{\sigma_{1}(\theta_{n})}+z_{\alpha}\frac{\sigma_{1}(\theta_{0})}{\sigma_{1}(\theta_{n})})\\\
+  &\to\phi(-\frac{\sqrt{n_{1}}(\mu_{1}(\theta_{0})-\mu_{1}(\theta_{n}))}{\sigma_{1}(\theta_{n})}-z_{\alpha}\frac{\sigma_{1}(\theta_{0})}{\sigma_{1}(\theta_{n})})\text{. (Since the distribution is symmetric.)}\\ 
+\end{align*}
+Since \(\sigma_{1}(\theta_{n})\xrightarrow{p}\sigma_{1}(\theta_{0})\), \(\mu_{1}(\theta_{n})-\mu_{1}(\theta_{0})\xrightarrow{p}\mu_{1}'(\theta_{0})(\theta_{n}-\theta_{0})\text{, (By Taylor expansion)}\), then: 
+\[
+P_{H_{1}}(T_{1}>c_{1})\to \phi(-z_{\alpha}+\frac{\sqrt{n_{1}}\mu_{1}'(\theta_{0})(\theta_{n}-\theta_{0})}{\sigma_{1}(\theta_{0})})
+\] 
+\[
+P_{H_{1}}(T_{2}>c_{2})\to \phi(-z_{\alpha}+\frac{\sqrt{n_{2}}\mu_{2}'(\theta_{0})(\theta_{n}-\theta_{0})}{\sigma_{2}(\theta_{0})})
+\] 
+By the definition of Pitman ARE, we let \(P_{H_{1}}(T_{1}>c_{1})=P_{H_{1}}(T_{2}>c_{2})\), deriving \(e(T_{2},T_{1})=\frac{n_{1}}{n_{2}}\).  
+Since: 
+\[
+\frac{\sqrt{n_{1}}\mu_{1}'(\theta_{0})(\theta_{n}-\theta_{0})}{\sigma_{1}(\theta_{0})}=
+\frac{\sqrt{n_{2}}\mu_{2}'(\theta_{0})(\theta_{n}-\theta_{0})}{\sigma_{2}(\theta_{0})}
+\] 
+Then we can solve out: \(e(T_{2},T_{1})=\frac{n_{1}}{n_{2}}=\frac{\sigma_{1}^{2}(\theta_{0})}{\sigma_{2}^{2}(\theta_{0})}[\frac{\mu_{2}'(\theta_{0})}{\mu_{1}'(\theta_{0})}]^{2}\) 
+\end{proof}
+
+\begin{corollary}
+  In the case of \(\theta_{0}=0\), suppose \(F(0)=\frac{1}{2}\) and \(X_{1},\ldots,X_{n}\) iid from \(F(x-\theta)\)  . For \(T_{2}=\frac{S_{n}}{n}\), since \(S_{n}=\sum_{i=1}^{n} I(X_{i}>\theta_{0})\), then \(\mu_{2}(\theta)=1-F(-\theta)\) and \(\sigma_{2}^{2}(\theta)=\frac{F(-\theta)(1-F(-\theta))}{n}\). Let \(\theta=\theta_{0}=0\), we get: 
+  \[
+  e(S_{n},\overline{X}_{n})=4\sigma_{F}^{2}f^{2}(0)
+  \]      
+\end{corollary}
+The sign test cannot be arbitrarily bad with respect to the t-test, which is bound by $\frac{1}{3}$, but the t-test can be arbitrarily bad with respect to the sign test.
+
+\subsection{Signed rank test (Wilcoxon)}
+\subsubsection{Procedure}
+\(X_{1},\ldots,X_{n}\) are iid observed from some location parameter distribution \(F(x-\theta)\) and F is symmetric. Let \(\theta=\operatorname{median} (F)\), we want to test: \(H_{0}:\theta=0\text{ versus } H_{1}:\theta>0\). 
+
+We start by ranking \(|X_{i}|\) from the smallest to the largest, giving the units ranks \(R_{1},\ldots,R_{n}\) and order statistics \(|X|_{(1)},\ldots,|X|_{(n)}\)   
+
+We define the Wilcoxon signed-rank statistic:  
+\[
+T_{n}=\sum_{i=1}^{n} R_{i}I(X_{i}>0)
+\] 
+where \(R_{i}I(X_{i}>0)\) can be called the positive signed rank of \(X_{i}\)  .
+When \(\theta\) is greater than 0, \(T_{n}\) is expected to be large.
+
+There is no information loss when using the positive signed rank, for positive signed rank+positive signed rank=\(\sum_{i=1}^{n} R_{i}=\frac{n(n+1)}{2}\) 
+
+Now we try to derive the null distribution of \(T_{n}\). 
+
+Define: 
+\[
+W_{i}=I(|X|_{(i)} \text{ corresponds to some positive }X_{j})
+\] 
+Then \(T_{n}\) can be written as: 
+\[
+T_{n}=\sum_{i=1}^{n} iW_{i}
+\]
+\begin{proposition}
+  Under \(H_{0},W_{1},\ldots,W_{n}\) are i.i.d. \(\operatorname{BIN}(1,\frac{1}{2})\) variables.
+\end{proposition} 
+By the symmetric assumption, \(E(W_{i})=\frac{1}{2}\). 
+
+Then we can simply get \(E_{H_{0}}(T_{n})=\frac{n(n+1)}{4}\) and \(
+  \operatorname{Var}_{H_{0}}(T_{n})=\frac{n(n+1)(2n+1)}{24}\)  
+  \begin{theorem}
+    Under \(H_{0},\(\frac{T_{n}-\frac{n(n+1)}{4}}{\sqrt{\frac{n(n+1)(2n+1)}{24}}}\xrightarrow{d}N(0,1)\) \) 
+  \end{theorem}
+
+Now we use U-statistics to derive the asymptotic distribution of \(T_{n}\) under \(H_{1}\)  
+\begin{proposition}
+  \(T_{n}\) can also be written as: 
+  \[
+  T_{n}=\sum_{i\le j}^{} I\left( \frac{X_{i}+X_{j}}{2}>0 \right)
+  =\sum_{i\le j}^{} I\left( {X_{i}+X_{j}}{}>0 \right)
+  \]  
+\end{proposition}
+Define the anti-rank to prove this: 
+\[
+D_{k}=\left\{ i: R_{i}=k,1\le i\le n \right\}
+\] 
+\begin{align*}
+  \sum_{i\le j}^{} I\left( \frac{X_{i}+X_{j}}{2}>0 \right)&=\sum_{i=1}^{n} I(X_{i}>0)+\sum_{i<j}^{} I(\frac{X_{D_{i}+D_{j}}}{2}>0)\\
+  &=
+  \sum_{i=1}^{n} I(X_{i}>0)+\sum_{i<j}^{} I(X_{D_{j}}>0)\\
+  &=
+  \sum_{j=1}^{n} I(X_{j}>0)+\sum_{j=1}^{n}(j-1) I(X_{D_{j}}>0)\\
+  &=\sum_{j=1}^{n} jI(X_{D_{j}}>0)=\sum_{i=1}^{n} iW_{i}
+\end{align*}
+
+We define the kernel function \(h(x_{1},x_{2},\ldots,x_{r})\) and assume \(n\ge r\), where r is called the order. 
+We want to estimate about the parameter \(\theta=\theta(F)=E_{F}h(X_{1},X_{2},\ldots,X_{r})\)  
+
+A better unbiased estimate than \(h(X_{1},\ldots,X_{r})\) itself is the U-statistics: 
+\[
+U=\frac{1}{{n\choose r}}\sum_{1\le i_{1}<i_{2}<\ldots<i_{r}\le n}^{} h(X_{i_{1}},X_{i_{2}},\ldots,X_{i_{r}})
+\]  
+\begin{example}
+  Let r=1, then sample moments and \(F_{n}(x_{0})\) is a U-statistic. Let r=2, \(h(x_{1},x_{2})=\frac{1}{2}(x_{1}-x_{2})^{2}\), then the sample variance is a U-statistic. 
+\end{example}
+\begin{example}
+  Let \(h(X_{1},X_{2})=I(X_{1}+X_{2}>0)\), then \(U=\frac{1}{{n\choose 2}}\sum_{i<j }^{} I(X_{i }+X_{j }>0)\) and can be related to Wilcoxon statistic.   
+\end{example}
+
+For \(k=1,\ldots,r\), let
+\begin{align*}
+  h_{k}(x_{1},\ldots,x_{k})&=E[h(X_{1},\ldots,X_{r})|X_{1}=x_{1},\ldots,X_{k}=x_{k}]\\
+  &=E[h(x_{1},\ldots,x_{k},X_{k+1},\ldots,X_{r})]
+\end{align*}
+Define \(\zeta_{k}=\operatorname{Var}(h_{k}(X_{1},\ldots,X_{k}))\) 
+
+It can be shown that: 
+\[
+U_{n}-\theta  =\frac{r}{n}\sum_{i=1}^{n} (h_{1}(X_{i})-\theta)+o_{p}(n^{-1/2})
+\] 
+The iid sum occurs! 
+\begin{theorem}
+  Suppose \(Eh^{2}(X_{1},\ldots,X_r)<\infty,0<\zeta_{1}<\infty.\) Then: 
+  \[
+  \frac{U-\theta}{\sqrt{\operatorname{Var}(U)}}\xrightarrow{d}N(0,1)
+  \]  
+  where \(\operatorname{Var}(U)=\frac{1}{n}r^{2}\zeta_{1}+O(n^{-2})\) 
+\end{theorem}
+\begin{theorem}
+  \[
+  \frac{T_{n}-E[T_{n}]}{\sqrt{\operatorname{Var}(T_{n})}}\xrightarrow{d}N(0,1)
+  \] 
+\end{theorem}
+\begin{proof}
+  \begin{align*}
+    \frac{1}{{n\choose 2}}T_{n}&=\frac{1}{{n\choose 2}}\sum_{i\le j}^{} I(X_{i}+X_{j }>0)\\
+    &=\frac{1}{{n\choose 2}}\sum_{i=1}^{n} I(X_{i}>0)+\frac{1}{{n\choose 2}}\sum_{i<j }^{} I(X_{i}+X_{j }>0)
+  \end{align*}
+  The first is \(o_{p}(1)\) and second is asymptotically normal as Theorem 5.2.2 
+
+\end{proof}
+\begin{theorem}
+  If F is a continous symmetric CDF with unique median \(\theta\), then the signed rank test is consistent for tests on \(\theta\)  
+\end{theorem}
+\begin{proof}
+  We can derive the critical value by the Theorem above. \(t_{n}=E[T_{n}]+z_{\alpha}\sqrt{\operatorname{Var}(T_{n})}\), and we can directly derive that: \(\frac{t_{n}}{{n \choose 2}}\to \frac{1}{2}\).  
+  Then the power is: 
+  \[
+  Q_{n}=P_{F}(T_{n}\ge t_{n})=P_{F}\left(\frac{1}{{n \choose 2}}T_{n}-p_{\theta}\ge \frac{1}{{n \choose 2}}t_{n}-p_{\theta}  \right)
+  \] 
+  where \(p_{\theta}=P_{\theta}(X_{1}+X_{2}>0)>\frac{1}{2}\) under \(H_{1}\). According to Theorem 5.2.2, \(\frac{1}{{n \choose 2}}T_{n}-p_{\theta}\xrightarrow{p}0\) under any F. Then \(Q_{n}\to 1\).   
+\end{proof}
+\begin{theorem}
+  (i) The Pitman ARE is 
+  \[
+  e(T_{n},\overline{X}_{n})=12\sigma_{F}^{2}\left( \int_{-\infty}^{\infty}f^{2}(u)du \right)^{2}
+  \] 
+  (ii)\(\inf_{F\in \mathcal{F} }e(T_{n},\overline{X}_{n})=\frac{108}{125}\approx 0.864\), where \(\mathcal{F}\) is the family of CDFs satisfying continuous, symmetric and \(\sigma^{2}_{F}<\infty\). The equality is attained at F s.t. \(f(x)=b(a^{2}-x^{2}),|x|<a\), where \(a=\sqrt{5},b=\frac{3\sqrt{5}}{20}\)     
+\end{theorem}
+\begin{proof}
+   (i) Let \(T_{2n}=\frac{1}{{n\choose 2}}T_{n}\), since: 
+   \begin{align*}
+    E[\frac{1}{{n\choose 2}}T_{n}]\xrightarrow{p}E[\frac{1}{{n\choose 2}}\sum_{i<j }^{}I(X_{i}+X_{j }>0)]=E_{F}(I(X_{1}+X_{2}>0))=P_{\theta}(X_{1}+X_{2}>0) 
+   \end{align*}
+   Using conditional expectation to calaculate this: 
+   \begin{align*}
+    E_{F}(I(X_{1}+X_{2}>0)&|X_{2}=x)=P(X_{1}>-x)\\
+    &=1-F(-x-\theta)=F(x+\theta)\text{ (by symmetric.)}
+   \end{align*}
+   Then \(E_{F}[I(X_{1}+X_{2}>0)&|X_{2}]=F(X_{2}+\theta)\), then: 
+   \[
+   P_{\theta}(X_{1}+X_{2}>0 )=E[E_{F}[I(X_{1}+X_{2}>0)&|X_{2}]]=\int F(x+\theta)f(x-\theta)dx.
+   \] 
+   Then \(\mu_{n}'(\theta)=2\int f(x+\theta)f(x-\theta)dx\) and \(\mu_{n}'(0)=2\int f^{2}(u)du>0\)  
+
+   According to Theorem 5.2.2., we have: (\(h(x_{1},x_{2})=I(X_{1}+X_{2}>0)\) here)
+   \begin{align*}
+    \operatorname{Var}(T_{2n})&=\frac{1}{n}r^{2}\zeta_{1}+O(n^{-2})\\
+    &=\frac{1}{n}2^{2}\operatorname{Var}(h_{1}(X_{1}))+O(n^{-2})\\
+    &=\frac{4}{n}\left\{ E[E^{2}(h(X_{1},X_{2})|X_{1})]-[E[E(h(X_{1},X_{2})|X_{1})]]^{2} \right\}\\
+    &=\frac{4}{n}\left\{ E[1-F(-X_{1})]^{2}-E^{2}h(X_{1},X_{2}) \right\}\\
+    &=\frac{4}{n}\left\{ \int [1-F(-x-\theta)]^{2}f(x-\theta)dx-\left( \int [1-F(-x-\theta)]f(x-\theta)dx \right)^{2} \right\}\\
+    &=\frac{4}{n}\left\{ \int F^{2}(x+\theta)f(x-\theta)dx-\left( \int F(x+\theta)f(x-\theta)dx \right)^{2} \right\}\\
+   \end{align*}
+   So we have: \(\sigma_{n}(0)=\frac{4}{n}\operatorname{Var}_{F}[F(X)]=\frac{4}{n}\frac{1}{12}=\frac{1}{3n}\).
+   
+   For \(T_{1n}=\overline{X}_{n}\), we have: \(\mu_{n}(\theta)=\theta,\sigma_{n}^{2}(\theta)=\frac{\sigma_{F}^{2}}{n}\). Then the result follows from Theorem 5.1.2.  
+\end{proof}
+\end{document}
